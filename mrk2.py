@@ -2,7 +2,9 @@ from datasets import load_dataset
 import gradio as gr
 from datasets import Audio
 import librosa
-from transformers import WhisperFeatureExtractor
+from transformers import WhisperFeatureExtractor, AutoProcessor
+import numpy as np
+import matplotlib.pyplot as plt
 
 
 minds = load_dataset("PolyAI/minds14", name = "en-AU", split = "train")
@@ -52,4 +54,12 @@ def prepare_dataset(example):
 	return features
 
 minds = minds.map(prepare_dataset)
-print(minds)
+# print(minds)
+
+example = minds[0]
+input_features = example["input_features"]
+# librosa.display.specshow(np.asarray(input_features[0]), x_axis = "time", y_axis = "mel", sr = feature_extractor.sampling_rate, hop_length = feature_extractor.hop_length)
+# plt.colorbar()
+# plt.show()
+
+processor = AutoProcessor.from_pretrained("openai/whisper-small")
