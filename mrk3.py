@@ -10,3 +10,8 @@ print(classifier(example["audio"]["array"]))
 
 id2label = minds.features["intent_class"].int2str
 print(id2label(example["intent_class"]))
+
+asr = pipeline("automatic-speech-recognition")
+example = minds[0]
+print(asr(example["audio"]["array"]))
+print(example["english_transcription"])
